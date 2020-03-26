@@ -16,6 +16,7 @@ function onLoad(){
 }
 
 
+
 (function rideScopeWrapper($) {
     var authToken;
     WildRydes.authToken.then(function setAuthToken(token) {
@@ -72,7 +73,21 @@ function onLoad(){
                 console.error('Details: ', errorThrown);
             }
         });
+    }
 
+    function email() {
+        $.ajax({
+            method: 'POST',
+            url: _config.api.invokeUrl + '/ses',
+            data: JSON.stringify({
+            }),
+            crossDomain: true,
+            contentType: 'application/json',
+            // success: function() { alert('Success')},
+            error: function ajaxError(errorThrown) {
+                console.error('Details: ', errorThrown);
+            }
+        });
     }
 
     // function requestUnicorn(pickupLocation) {
@@ -127,6 +142,7 @@ function onLoad(){
         // }
         $("#book").click(requestAppointment);
         $("#waitlist").click(requestWaitlist);
+        $("#email").click(email);
     });
 
     // function handlePickupChanged() {
