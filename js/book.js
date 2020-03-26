@@ -30,10 +30,10 @@ function onLoad(){
 }
 
 Array.prototype.remove = function() {
-    var what, a = arguments, L = a.length, ax;
+    var args, a = arguments, L = a.length, ax;
     while (L && this.length) {
-        what = a[--L];
-        while ((ax = this.indexOf(what)) !== -1) {
+        args = a[--L];
+        while ((ax = this.indexOf(args)) !== -1) {
             this.splice(ax, 1);
         }
     }
