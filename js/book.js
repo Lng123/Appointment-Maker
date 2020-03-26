@@ -8,7 +8,7 @@ function onLoad(){
         console.log(data)
                 for(let i = 0;i <data.Count;i++){
             let node = document.createElement("p")
-            let textnode = document.createTextNode(data.Items[i].Username)
+            let textnode = document.createTextNode(data.Items[i].btime)
             node.appendChild(textnode)
             body.appendChild(node)
         }
