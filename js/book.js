@@ -4,13 +4,21 @@ var WildRydes = window.WildRydes || {};
 // WildRydes.map = WildRydes.map || {};
 function onLoad(){
     var body = document.getElementsByTagName("body")[0];
+    var select = document.getElementById("booktime")
+    var wselect = document.getElementById("waittime")
     fetch("https://4qgn3wc3d2.execute-api.us-west-2.amazonaws.com/test/users").then((response=>response.json())).then((data) =>{
         console.log(data)
                 for(let i = 0;i <data.Count;i++){
-            let node = document.createElement("p")
+            let node = document.createElement("option")
+              node.setAttribute("value", data.Items[i].btime);
             let textnode = document.createTextNode(data.Items[i].btime)
             node.appendChild(textnode)
-            body.appendChild(node)
+            select.appendChild(node)
+                        let node2 = document.createElement("option")
+              node2.setAttribute("value", data.Items[i].wtime);
+            let textnode2 = document.createTextNode(data.Items[i].wtime)
+            node2.appendChild(textnode2)
+            wselect.appendChild(node2)
         }
     })
 }
