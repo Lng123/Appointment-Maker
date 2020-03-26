@@ -3,25 +3,42 @@
 var WildRydes = window.WildRydes || {};
 // WildRydes.map = WildRydes.map || {};
 function onLoad(){
+    var availabletimes = ["9-10","10-11","11-12","12-1","1-2","2-3","3-4"]
     var body = document.getElementsByTagName("body")[0];
-    var select = document.getElementById("booktime")
-    var wselect = document.getElementById("waittime")
+    var bselect = document.getElementById("booktime")
+    var select = document.getElementById("waittime")
     fetch("https://4qgn3wc3d2.execute-api.us-west-2.amazonaws.com/test/users").then((response=>response.json())).then((data) =>{
         console.log(data)
-                for(let i = 0;i <data.Count;i++){
+        for(let i = 0;i <data.Count;i++){
             let node = document.createElement("option")
               node.setAttribute("value", data.Items[i].btime);
             let textnode = document.createTextNode(data.Items[i].btime)
             node.appendChild(textnode)
             select.appendChild(node)
-                        let node2 = document.createElement("option")
-              node2.setAttribute("value", data.Items[i].wtime);
-            let textnode2 = document.createTextNode(data.Items[i].wtime)
-            node2.appendChild(textnode2)
-            wselect.appendChild(node2)
+            availabletimes.remove(data.Items[i].btime)
+            //console.log(availabletimes)
         }
-    })
+    }).then((data) => {
+        for(let i = 0;i <availabletimes.length;i++){
+            let node = document.createElement("option")
+              node.setAttribute("value",availabletimes[i]);
+            let textnode = document.createTextNode(availabletimes[i])
+            node.appendChild(textnode)
+            bselect.appendChild(node)
+        }
+})
 }
+
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 
 
