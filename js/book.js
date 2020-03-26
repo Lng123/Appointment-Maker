@@ -2,6 +2,19 @@
 
 // var WildRydes = window.WildRydes || {};
 // WildRydes.map = WildRydes.map || {};
+function onLoad(){
+    var body = document.getElementsByTagName("body")[0];
+    fetch("https://4qgn3wc3d2.execute-api.us-west-2.amazonaws.com/test/users").then((response=>response.json())).then((data) =>{
+        console.log(data)
+                for(let i = 0;i <data.Count;i++){
+            let node = document.createElement("p")
+            let textnode = document.createTextNode(data.Items[i].Username)
+            node.appendChild(textnode)
+            body.appendChild(node)
+        }
+    })
+}
+
 
 (function rideScopeWrapper($) {
     var authToken;
