@@ -1,32 +1,73 @@
 
 var WildRydes = window.WildRydes || {};
+var availabletimes;
 function onLoad(){
-    var availabletimes = ["9-10","10-11","11-12","12-1","1-2","2-3","3-4"]
+    availabletimes = ["9-10","10-11","11-12","12-1","1-2","2-3","3-4"]
     var body = document.getElementsByTagName("body")[0];
     var bselect = document.getElementById("booktime")
     var select = document.getElementById("waittime")
-    fetch("https://wxzmbaihsc.execute-api.us-west-2.amazonaws.com/prod/home").then((response=>response.json())).then((data) =>{
-        console.log(data);
-        console.log(data.Count);
-        for(let i = 0;i <data.Count;i++){
-            console.log("test");
+    
+    $.ajax({
+        url: 'https://dqo3x88vw4.execute-api.us-west-2.amazonaws.com/prod/home',
+        type: 'GET',
+                    error: function ajaxError(errorThrown) {
+                console.error('Details: ', errorThrown);
+            },
+        success: function(data) {
+            console.log(data + "fromajax");
+            
+            for(let i = 0; i<data.Count;i++){
             let node = document.createElement("option")
-              node.setAttribute("value", data.Items[i].Btime);
+              node.setAttribute("value", data.Items[i].Wtime);
             let textnode = document.createTextNode(data.Items[i].Btime)
             node.appendChild(textnode)
             select.appendChild(node)
             availabletimes.remove(data.Items[i].Btime)
-            //console.log(availabletimes)
-        }
-    }).then((data) => {
-        for(let i = 0;i <availabletimes.length;i++){
+             for(let i = 0;i <availabletimes.length;i++){
             let node = document.createElement("option")
               node.setAttribute("value",availabletimes[i]);
             let textnode = document.createTextNode(availabletimes[i])
             node.appendChild(textnode)
             bselect.appendChild(node)
         }
-})
+            //console.log(availabletimes)
+        }
+            
+        }
+    });
+    checkBooking(availabletimes);
+
+}
+
+function checkBooking(availtimes){
+    var waittimes = [];
+        $.ajax({
+        url: 'https://dqo3x88vw4.execute-api.us-west-2.amazonaws.com/prod/home',
+        type: 'GET',
+                    error: function ajaxError(errorThrown) {
+                console.error('Details: ', errorThrown);
+            },
+        success: function(data) {
+            //console.log(data + "from checkbookingajax");
+            
+            for(let i = 0; i<data.Count;i++){
+                waittimes.push(data.Items[i])
+            }
+            //console.log(waittimes + "waittimesarray")
+             for(let i = 0;i <availtimes.length;i++){
+                 for(let j = 0; j<waittimes.length;j++){
+                     //console.log(waittimes[j].Wtime + "wtime")
+                     if(availtimes[i] == waittimes[j].Wtime){
+                         console.log("MATCHED, EMAIL this person - " + waittimes[j].Username)
+                     }
+                 }
+                 
+        }
+            //console.log(availabletimes)
+        }
+            
+        
+    });
 }
 
 Array.prototype.remove = function() {
