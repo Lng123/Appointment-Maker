@@ -5,17 +5,17 @@ function onLoad(){
     var body = document.getElementsByTagName("body")[0];
     var bselect = document.getElementById("booktime")
     var select = document.getElementById("waittime")
-    fetch("https://9sl3olysae.execute-api.us-west-2.amazonaws.com/prod/home").then((response=>response.json())).then((data) =>{
+    fetch("https://wxzmbaihsc.execute-api.us-west-2.amazonaws.com/prod/home").then((response=>response.json())).then((data) =>{
         console.log(data);
         console.log(data.Count);
         for(let i = 0;i <data.Count;i++){
             console.log("test");
             let node = document.createElement("option")
-              node.setAttribute("value", data.Items[i].btime);
-            let textnode = document.createTextNode(data.Items[i].btime)
+              node.setAttribute("value", data.Items[i].Btime);
+            let textnode = document.createTextNode(data.Items[i].Btime)
             node.appendChild(textnode)
             select.appendChild(node)
-            availabletimes.remove(data.Items[i].btime)
+            availabletimes.remove(data.Items[i].Btime)
             //console.log(availabletimes)
         }
     }).then((data) => {
@@ -59,9 +59,22 @@ Array.prototype.remove = function() {
         let t = document.getElementById("booktime")
         let time = t.options[t.selectedIndex].value
         console.log(time)
+        // fetch(" https://9sl3olysae.execute-api.us-west-2.amazonaws.com/prod/ride", {
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //         // "Access-Control-Allow-Origin" : "*",
+        //         // "Access-Control-Allow-Credentials" : true,
+        //         'Authorization': 'authToken'
+        //       },
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //             Btime : time
+        //     })
+        // })
         $.ajax({
             method: 'POST',
-            url: _config.api.invokeUrl + '/ride',
+            url: _config.api.invokeUrl + '/book',
             headers: {
                 Authorization: authToken
             },
@@ -74,7 +87,8 @@ Array.prototype.remove = function() {
                 console.error('Details: ', errorThrown);
             }
         });
-
+        alert("Booked, an email confirmation should be sent");
+        location.reload();
     }
 
     function requestWaitlist() {
@@ -98,6 +112,8 @@ Array.prototype.remove = function() {
                 console.error('Details: ', errorThrown);
             }
         });
+        alert("Waitlisted");
+        location.reload();
     }
 
     // Register click handler for #request button
@@ -110,7 +126,6 @@ Array.prototype.remove = function() {
 
         $("#book").click(requestAppointment);
         $("#waitlist").click(requestWaitlist);
-        $("#email").click(email);
     });
 
     
