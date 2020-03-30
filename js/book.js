@@ -17,19 +17,19 @@ function onLoad(){
             console.log(data + "fromajax");
             
             for(let i = 0; i<data.Count;i++){
-            let node = document.createElement("option")
-              node.setAttribute("value", data.Items[i].Wtime);
-            let textnode = document.createTextNode(data.Items[i].Btime)
-            node.appendChild(textnode)
-            select.appendChild(node)
-            availabletimes.remove(data.Items[i].Btime)
-             for(let i = 0;i <availabletimes.length;i++){
-            let node = document.createElement("option")
-              node.setAttribute("value",availabletimes[i]);
-            let textnode = document.createTextNode(availabletimes[i])
-            node.appendChild(textnode)
-            bselect.appendChild(node)
+                let node = document.createElement("option")
+                node.setAttribute("value", data.Items[i].Btime);
+                let textnode = document.createTextNode(data.Items[i].Btime)
+                node.appendChild(textnode)
+                select.appendChild(node)
+                availabletimes.remove(data.Items[i].Btime)
         }
+            for(let i = 0;i <availabletimes.length;i++){
+                let node = document.createElement("option")
+                node.setAttribute("value",availabletimes[i]);
+                let textnode = document.createTextNode(availabletimes[i])
+                node.appendChild(textnode)
+                bselect.appendChild(node)
             //console.log(availabletimes)
         }
             
