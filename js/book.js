@@ -40,6 +40,17 @@ function onLoad(){
 }
 
 function checkBooking(availtimes){
+    var authToken;
+    WildRydes.authToken.then(function setAuthToken(token) {
+        if (token) {
+            authToken = token;
+        } else {
+            window.location.href = '/signin.html';
+        }
+    }).catch(function handleTokenError(error) {
+        alert(error);
+        window.location.href = '/signin.html';
+    });
     var waittimes = [];
         $.ajax({
         url: 'https://dqo3x88vw4.execute-api.us-west-2.amazonaws.com/prod/home',
@@ -53,16 +64,38 @@ function checkBooking(availtimes){
             for(let i = 0; i<data.Count;i++){
                 waittimes.push(data.Items[i])
             }
+            var recipient = [];
+            var wtime;
             //console.log(waittimes + "waittimesarray")
              for(let i = 0;i <availtimes.length;i++){
                  for(let j = 0; j<waittimes.length;j++){
                      //console.log(waittimes[j].Wtime + "wtime")
                      if(availtimes[i] == waittimes[j].Wtime){
                          console.log("MATCHED, EMAIL this person - " + waittimes[j].Username)
+                         recipient.push(waittimes[j].Username);
+                         wtime = waittimes[j].Wtime;
                      }
                  }
                  
         }
+        console.log(recipient);
+        console.log(wtime);
+        $.ajax({
+            method: 'POST',
+            url: _config.api.invokeUrl + '/notifywaitlist',
+            headers: {
+                Authorization: authToken
+            },
+            data: JSON.stringify({
+                Wtime : wtime,
+                recipient : recipient
+            }),
+            contentType: 'application/json',
+            // success: completeRequest,
+            error: function ajaxError(errorThrown) {
+                console.error('Details: ', errorThrown);
+            }
+        });
             //console.log(availabletimes)
         }
             
