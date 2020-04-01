@@ -130,6 +130,12 @@ Array.prototype.remove = function() {
         window.location.href = '/signin.html';
     });
 
+    
+    
+    
+    
+    
+    
     function requestAppointment() {
         let t = document.getElementById("booktime")
         let time = t.options[t.selectedIndex].value
@@ -188,7 +194,6 @@ Array.prototype.remove = function() {
 
         $("#book").click(requestAppointment);
         $("#waitlist").click(requestWaitlist);
-        $("#email").click(checkBooking(availabletimes))
     });
 
     
