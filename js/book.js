@@ -70,6 +70,7 @@ function checkBooking(availtimes){
              for(let i = 0;i <availtimes.length;i++){
                  for(let j = 0; j<waittimes.length;j++){
                      //console.log(waittimes[j].Wtime + "wtime")
+                     console.log(availtimes[i] + " -----" + waittimes[j].Wtime);
                      if(availtimes[i] == waittimes[j].Wtime){
                          console.log("MATCHED, EMAIL this person - " + waittimes[j].Username)
                          recipient.push(waittimes[j].Username);
