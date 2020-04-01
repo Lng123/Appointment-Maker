@@ -35,7 +35,7 @@ function onLoad(){
             
         }
     });
-    checkBooking(availabletimes);
+    //checkBooking(availabletimes);
 
 }
 
