@@ -201,6 +201,7 @@ Array.prototype.remove = function() {
 
         $("#book").click(requestAppointment);
         $("#waitlist").click(requestWaitlist);
+        $("#email").click(checkBooking(availabletimes))
     });
 
     
