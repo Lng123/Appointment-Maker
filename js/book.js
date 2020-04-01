@@ -134,19 +134,6 @@ Array.prototype.remove = function() {
         let t = document.getElementById("booktime")
         let time = t.options[t.selectedIndex].value
         console.log(time)
-        // fetch(" https://9sl3olysae.execute-api.us-west-2.amazonaws.com/prod/ride", {
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json',
-        //         // "Access-Control-Allow-Origin" : "*",
-        //         // "Access-Control-Allow-Credentials" : true,
-        //         'Authorization': 'authToken'
-        //       },
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //             Btime : time
-        //     })
-        // })
         $.ajax({
             method: 'POST',
             url: _config.api.invokeUrl + '/book',
