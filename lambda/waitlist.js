@@ -3,53 +3,55 @@ const AWS = require('aws-sdk');
 const ddb = new AWS.DynamoDB.DocumentClient();
 var ses = new AWS.SES({region: 'us-west-2'});
 
+
 exports.handler = (event, context, callback) => {
     if (!event.requestContext.authorizer) {
       errorResponse('Authorization not configured', context.awsRequestId, callback);
       return;
     }
+
+
     const username = event.requestContext.authorizer.claims['cognito:username'];
     const recipient = [];
     recipient.push(username);
 
     const requestBody = JSON.parse(event.body);
 
-    const Btime = requestBody.Btime;
-    bookAppointment(username, Btime);
-    sendEmail(recipient, Btime);
+    const Wtime = requestBody.Wtime;
+
+    waitList(username, Wtime);
+    sendEmail(recipient, Wtime);
 };
 
-
-function bookAppointment(username, Btime) {
+function waitList(username, Wtime) {
     return ddb.update({
         TableName: 'Users',
         Key : {
             Username: username
         },
-        UpdateExpression: "set Btime = :t",
+        UpdateExpression: "set Wtime = :w",
         ExpressionAttributeValues:{
-            ":t":Btime
+            ":w":Wtime
         },
         ReturnValues:"UPDATED_NEW"
 
     }).promise();
 }
 
-
-function sendEmail(recipient, Btime) {
+function sendEmail(recipient, Wtime) {
     var params = {
         Destination: {
             ToAddresses: recipient
         },
         Message: {
             Body: {
-                Text: { Data: "You have booked an appointment for " + Btime + "."
+                Text: { Data: "You have been waitlisted for " + Wtime + "."
                     
                 }
                 
             },
             
-            Subject: { Data: "Appointment booking"
+            Subject: { Data: "Waitlisted"
                 
             }
         },
