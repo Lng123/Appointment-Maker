@@ -18,11 +18,13 @@ function onLoad(){
             
             for(let i = 0; i<data.Count;i++){
                 let node = document.createElement("option")
+				if( data.Items[i].Btime != null &&  data.Items[i].Btime !== undefined){
                 node.setAttribute("value", data.Items[i].Btime);
                 let textnode = document.createTextNode(data.Items[i].Btime)
                 node.appendChild(textnode)
                 select.appendChild(node)
                 availabletimes.remove(data.Items[i].Btime)
+				}
         }
             for(let i = 0;i <availabletimes.length;i++){
                 let node = document.createElement("option")
@@ -53,7 +55,7 @@ function checkBooking(availtimes){
     });
     var waittimes = [];
         $.ajax({
-        url: 'https://dqo3x88vw4.execute-api.us-west-2.amazonaws.com/prod/home',
+        url: _config.api.invokeUrl + '/home',
         type: 'GET',
                     error: function ajaxError(errorThrown) {
                 console.error('Details: ', errorThrown);
