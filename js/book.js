@@ -8,7 +8,7 @@ function onLoad(){
     var select = document.getElementById("waittime")
     
     $.ajax({
-        url: 'https://dqo3x88vw4.execute-api.us-west-2.amazonaws.com/prod/home',
+        url: _config.api.invokeUrl + '/home',
         type: 'GET',
                     error: function ajaxError(errorThrown) {
                 console.error('Details: ', errorThrown);
