@@ -32,12 +32,10 @@ function onLoad(){
                 let textnode = document.createTextNode(availabletimes[i])
                 node.appendChild(textnode)
                 bselect.appendChild(node)
-            //console.log(availabletimes)
         }
             
         }
     });
-    //checkBooking(availabletimes);
 
 }
 
@@ -61,17 +59,13 @@ function checkBooking(availtimes){
                 console.error('Details: ', errorThrown);
             },
         success: function(data) {
-            //console.log(data + "from checkbookingajax");
-            
             for(let i = 0; i<data.Count;i++){
                 waittimes.push(data.Items[i])
             }
             var recipient = [];
             var wtime;
-            //console.log(waittimes + "waittimesarray")
              for(let i = 0;i <availtimes.length;i++){
                  for(let j = 0; j<waittimes.length;j++){
-                     //console.log(waittimes[j].Wtime + "wtime")
                      console.log(availtimes[i] + " -----" + waittimes[j].Wtime);
                      if(availtimes[i] == waittimes[j].Wtime){
                          console.log("MATCHED, EMAIL this person - " + waittimes[j].Username)
@@ -99,10 +93,7 @@ function checkBooking(availtimes){
                 console.error('Details: ', errorThrown);
             }
         });
-            //console.log(availabletimes)
         }
-            
-        
     });
 }
 
